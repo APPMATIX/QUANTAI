@@ -91,7 +91,7 @@ export default function SupportPage() {
     try {
       const { data, error } = await supabase
         .from('support_messages')
-        .select('user_id, message, is_read, sender_id, users(name)')
+        .select('user_id, message, is_read, sender_id')
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -99,12 +99,21 @@ export default function SupportPage() {
         throw error;
       }
 
+      const userIds = Array.from(new Set(data?.map(m => m.user_id) || []));
+      
+      const { data: usersData } = await supabase
+        .from('users')
+        .select('id, name')
+        .in('id', userIds);
+
+      const userMap = new Map(usersData?.map(u => [u.id, u.name]) || []);
+
       const uniqueUsers = new Map();
       data?.forEach(row => {
         if (!uniqueUsers.has(row.user_id)) {
           uniqueUsers.set(row.user_id, {
             id: row.user_id,
-            name: row.users ? (row.users as any).name : 'Unknown User',
+            name: userMap.get(row.user_id) || 'Unknown User',
             last_msg: row.message || 'Sent an attachment',
             unread: (!row.is_read && row.sender_id === row.user_id) ? 1 : 0
           });
