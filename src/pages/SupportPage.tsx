@@ -91,7 +91,7 @@ export default function SupportPage() {
     try {
       const { data, error } = await supabase
         .from('support_messages')
-        .select('user_id, message, is_read, sender_id, users(first_name, last_name)')
+        .select('user_id, message, is_read, sender_id, users(name)')
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -104,7 +104,7 @@ export default function SupportPage() {
         if (!uniqueUsers.has(row.user_id)) {
           uniqueUsers.set(row.user_id, {
             id: row.user_id,
-            name: row.users ? `${(row.users as any).first_name} ${(row.users as any).last_name}` : 'Unknown User',
+            name: row.users ? (row.users as any).name : 'Unknown User',
             last_msg: row.message || 'Sent an attachment',
             unread: (!row.is_read && row.sender_id === row.user_id) ? 1 : 0
           });
