@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-navy: #0a0e1a;
+  --color-brand-primary: #3b82f6;
+  --color-brand-accent: #60a5fa;
+  --color-brand-surface: #1e293b;
+  --color-brand-border: #334155;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-navy text-gray-200 antialiased selection:bg-brand-primary/30;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl;
+  }
+}
