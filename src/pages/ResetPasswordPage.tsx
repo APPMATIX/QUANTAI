@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { Key, Loader2, Building2 } from 'lucide-react';
+import { Key, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function ResetPasswordPage() {
