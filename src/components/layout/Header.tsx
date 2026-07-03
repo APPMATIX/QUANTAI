@@ -28,6 +28,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
           </button>
         )}
         <div className="flex items-center gap-2">
+           <img src="/logo.png" alt="Quant-AI Logo" className="w-6 h-6 object-contain rounded-sm" />
            <span className="text-xl font-bold text-white hidden sm:block">Quant-AI</span>
            {company?.name && (
              <>

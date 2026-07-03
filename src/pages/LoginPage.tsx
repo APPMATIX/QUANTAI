@@ -40,9 +40,7 @@ export default function LoginPage() {
 
       <div className="w-full max-w-md glass-card p-8 relative z-10">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 bg-brand-primary/20 rounded-2xl flex items-center justify-center mb-4 border border-brand-primary/30">
-            <Building2 className="w-8 h-8 text-brand-primary" />
-          </div>
+            <img src="/logo.png" alt="Quant-AI Logo" className="w-24 h-24 object-contain mb-4 rounded-2xl shadow-lg border border-white/10 bg-brand-surface/50" />
           <h1 className="text-2xl font-bold text-white text-center">
             Quantify AI
           </h1>

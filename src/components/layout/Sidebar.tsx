@@ -50,7 +50,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           {company?.logo_url ? (
             <img src={company.logo_url} alt={company.name || "Company Logo"} className="w-6 h-6 object-contain rounded-sm bg-white" />
           ) : (
-            <Building className="w-6 h-6 text-brand-primary flex-shrink-0" />
+            <img src="/logo.png" alt="Quant-AI Logo" className="w-6 h-6 object-contain rounded-sm" />
           )}
           <span className="truncate">
             {company?.name || 'Quant-AI'}
@@ -97,7 +97,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </button>
         <div className="text-center mt-2 mb-1 flex flex-col items-center justify-center">
           <div className="flex items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
-            <Building className="w-3.5 h-3.5 text-brand-primary" />
+            <img src="/logo.png" alt="Quant-AI" className="w-4 h-4 object-contain rounded-sm" />
             <span className="text-[10px] font-semibold text-gray-400">Powered by</span>
           </div>
           <p className="text-xs text-gray-300 font-bold mt-0.5">

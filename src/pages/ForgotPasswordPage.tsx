@@ -43,9 +43,7 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-10 relative z-10">
           <div className="flex justify-center mb-6">
-            <div className="w-16 h-16 bg-brand-primary/20 rounded-2xl flex items-center justify-center border border-brand-primary/30 backdrop-blur-sm shadow-[0_0_30px_rgba(30,136,229,0.3)]">
-              <Building2 className="w-8 h-8 text-brand-primary" />
-            </div>
+              <img src="/logo.png" alt="Quant-AI Logo" className="w-24 h-24 object-contain rounded-2xl shadow-lg border border-white/10 bg-brand-surface/50" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-3 tracking-tight">Forgot Password</h1>
           <p className="text-gray-400">Enter your email to receive a reset link</p>
