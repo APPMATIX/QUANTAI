@@ -13,6 +13,7 @@ import ProcessingPage from './pages/ProcessingPage';
 import BoqReview from './pages/BoqReview';
 import ExportPage from './pages/ExportPage';
 import CostCataloguePage from './pages/CostCataloguePage';
+import SupportPage from './pages/SupportPage';
 import ProfileSettingsPage from './pages/ProfileSettingsPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
@@ -49,6 +50,7 @@ export default function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/profile" element={<ProfileSettingsPage />} />
+              <Route path="/support" element={<SupportPage />} />
               
               {/* Project Routes */}
               <Route path="/projects" element={<ProjectListPage />} />

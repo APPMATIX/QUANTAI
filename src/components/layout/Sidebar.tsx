@@ -7,7 +7,8 @@ import {
   Users, 
   Building,
   Settings,
-  DollarSign
+  DollarSign,
+  MessageSquare
 } from 'lucide-react';
 import { X } from 'lucide-react';
 import clsx from 'clsx';
@@ -26,6 +27,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     { name: 'New Project', to: '/projects/new', icon: PlusSquare, roles: ['super_admin', 'admin', 'user'] },
     { name: 'User Management', to: '/admin/users', icon: Users, roles: ['super_admin', 'admin'] },
     { name: 'Cost Catalogue', to: '/cost-catalogue', icon: DollarSign, roles: ['super_admin', 'admin', 'user'] },
+    { name: 'Support', to: '/support', icon: MessageSquare, roles: ['super_admin', 'admin', 'user'] },
     { name: 'Company Settings', to: '/admin/company-settings', icon: Settings, roles: ['admin'] },
     { name: 'Companies', to: '/admin/companies', icon: Building, roles: ['super_admin'] },
     { name: 'Audit Logs', to: '/admin/audit-logs', icon: Settings, roles: ['super_admin', 'admin'] },
