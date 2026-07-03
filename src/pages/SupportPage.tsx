@@ -33,17 +33,17 @@ export default function SupportPage() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const isSuperAdmin = role === 'super_admin';
+  const hasAdminAccess = role === 'super_admin' || role === 'admin';
 
   useEffect(() => {
     if (!user) return;
     
-    if (isSuperAdmin) {
+    if (hasAdminAccess) {
       fetchUsersList();
     } else {
       setActiveUser(user.id);
     }
-  }, [user, isSuperAdmin]);
+  }, [user, hasAdminAccess]);
 
   useEffect(() => {
     if (!user || !activeUser) return;
@@ -55,11 +55,11 @@ export default function SupportPage() {
         event: 'INSERT', 
         schema: 'public', 
         table: 'support_messages', 
-        filter: isSuperAdmin ? undefined : `user_id=eq.${user.id}` 
+        filter: hasAdminAccess ? undefined : `user_id=eq.${user.id}` 
       }, (payload) => {
         const newMsg = payload.new as SupportMessage;
         
-        if (isSuperAdmin) {
+        if (hasAdminAccess) {
           if (newMsg.user_id === activeUser) {
             setMessages(prev => {
               if (prev.find(m => m.id === newMsg.id)) return prev;
@@ -79,7 +79,7 @@ export default function SupportPage() {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, [user, activeUser, isSuperAdmin]);
+  }, [user, activeUser, hasAdminAccess]);
 
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -144,7 +144,7 @@ export default function SupportPage() {
       scrollToBottom();
 
       // Mark as read if admin is viewing
-      if (isSuperAdmin && data?.some(m => !m.is_read && m.sender_id === targetUserId)) {
+      if (hasAdminAccess && data?.some(m => !m.is_read && m.sender_id === targetUserId)) {
         await supabase
           .from('support_messages')
           .update({ is_read: true })
@@ -299,7 +299,7 @@ CREATE POLICY "Auth upload attach" ON storage.objects FOR INSERT WITH CHECK (buc
       <div className="flex-1 glass-card border border-white/5 shadow-2xl overflow-hidden flex flex-col md:flex-row rounded-3xl mx-4 sm:mx-0">
         
         {/* Admin Inbox Sidebar */}
-        {isSuperAdmin && (
+        {hasAdminAccess && (
           <div className="w-full md:w-80 border-b md:border-b-0 md:border-r border-white/10 flex flex-col bg-brand-surface/50">
             <div className="p-4 border-b border-white/10">
               <h2 className="font-semibold text-white">Inbox</h2>
@@ -319,7 +319,10 @@ CREATE POLICY "Auth upload attach" ON storage.objects FOR INSERT WITH CHECK (buc
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-gray-400 truncate">{u.last_msg}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] text-brand-primary/80 font-mono tracking-wider">#TCKT-{u.id.substring(0,6).toUpperCase()}</span>
+                    <p className="text-xs text-gray-400 truncate ml-2 text-right">{u.last_msg}</p>
+                  </div>
                 </button>
               ))}
               {userList.length === 0 && !loading && (
