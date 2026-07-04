@@ -33,17 +33,17 @@ export default function SupportPage() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const hasAdminAccess = role === 'super_admin' || role === 'admin';
+  const isSuperAdmin = role === 'super_admin';
 
   useEffect(() => {
     if (!user) return;
     
-    if (hasAdminAccess) {
+    if (isSuperAdmin) {
       fetchUsersList();
     } else {
       setActiveUser(user.id);
     }
-  }, [user, hasAdminAccess]);
+  }, [user, isSuperAdmin]);
 
   useEffect(() => {
     if (!user || !activeUser) return;
@@ -55,11 +55,11 @@ export default function SupportPage() {
         event: 'INSERT', 
         schema: 'public', 
         table: 'support_messages', 
-        filter: hasAdminAccess ? undefined : `user_id=eq.${user.id}` 
+        filter: isSuperAdmin ? undefined : `user_id=eq.${user.id}` 
       }, (payload) => {
         const newMsg = payload.new as SupportMessage;
         
-        if (hasAdminAccess) {
+        if (isSuperAdmin) {
           if (newMsg.user_id === activeUser) {
             setMessages(prev => {
               if (prev.find(m => m.id === newMsg.id)) return prev;
@@ -79,7 +79,7 @@ export default function SupportPage() {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, [user, activeUser, hasAdminAccess]);
+  }, [user, activeUser, isSuperAdmin]);
 
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -153,7 +153,7 @@ export default function SupportPage() {
       scrollToBottom();
 
       // Mark as read if admin is viewing
-      if (hasAdminAccess && data?.some(m => !m.is_read && m.sender_id === targetUserId)) {
+      if (isSuperAdmin && data?.some(m => !m.is_read && m.sender_id === targetUserId)) {
         await supabase
           .from('support_messages')
           .update({ is_read: true })
@@ -276,9 +276,9 @@ CREATE TABLE IF NOT EXISTS public.support_messages (
 
 ALTER TABLE public.support_messages ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users view own msgs" ON public.support_messages FOR SELECT USING (auth.uid() = user_id OR EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND role IN ('super_admin', 'admin')));
+CREATE POLICY "Users view own msgs" ON public.support_messages FOR SELECT USING (auth.uid() = user_id OR EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND role = 'super_admin'));
 CREATE POLICY "Users insert own msgs" ON public.support_messages FOR INSERT WITH CHECK (auth.uid() = sender_id);
-CREATE POLICY "Admins update msgs" ON public.support_messages FOR UPDATE USING (auth.uid() = user_id OR EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND role IN ('super_admin', 'admin')));
+CREATE POLICY "Admins update msgs" ON public.support_messages FOR UPDATE USING (auth.uid() = user_id OR EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND role = 'super_admin'));
 
 ALTER PUBLICATION supabase_realtime ADD TABLE public.support_messages;
 
@@ -308,7 +308,7 @@ CREATE POLICY "Auth upload attach" ON storage.objects FOR INSERT WITH CHECK (buc
       <div className="flex-1 glass-card border border-white/5 shadow-2xl overflow-hidden flex flex-col md:flex-row rounded-3xl mx-4 sm:mx-0">
         
         {/* Admin Inbox Sidebar */}
-        {hasAdminAccess && (
+        {isSuperAdmin && (
           <div className="w-full md:w-80 border-b md:border-b-0 md:border-r border-white/10 flex flex-col bg-brand-surface/50">
             <div className="p-4 border-b border-white/10">
               <h2 className="font-semibold text-white">Inbox</h2>
