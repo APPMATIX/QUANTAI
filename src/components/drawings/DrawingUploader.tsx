@@ -62,6 +62,7 @@ export default function DrawingUploader({ projectId, onUploadComplete }: Drawing
         .from('project_files')
         .insert([{
           project_id: projectId,
+          company_id: profile?.company_id,
           file_url: filePath,
           file_name: file.name,
           file_size_bytes: file.size,
