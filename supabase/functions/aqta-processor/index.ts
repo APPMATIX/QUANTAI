@@ -17,15 +17,20 @@ serve(async (req) => {
       
       console.log(`Processing drawing [${fileId}] for project [${projectId}]...`);
       
-      // Step 1: In the real implementation, this is where we send fileUrl to OpenClaw Gateway.
-      // OpenClaw processes the image/pdf and returns the RAW geometry/symbol nodes.
-      // const openClawNodes = await fetch("https://openclaw.gateway/api/parse", { ... })
+      // Step 1: Parse the drawing deterministically (Vector parsing)
+      // NOTE: AI Vision integration (OpenClaw) is completely commented out and disabled as requested.
+      // We rely strictly on our deterministic Vector Parser for DXF/DWG files.
       
-      // For now, we simulate receiving parsed nodes from OpenClaw
-      const mockParsedNodes = []; 
+      /* 
+      --- AI Integration Disabled ---
+      const openClawNodes = await fetch("https://openclaw.gateway/api/parse", { ... })
+      */
+      
+      // For now, we simulate receiving parsed vector geometry directly from our determinisic parser
+      const parsedVectorNodes = []; 
 
-      // Step 2: Pass nodes to Deterministic Engineering Engines
-      const rulesAppliedNodes = RuleEngine.process(mockParsedNodes);
+      // Step 2: Pass vector nodes directly to Deterministic Engineering Engines
+      const rulesAppliedNodes = RuleEngine.process(parsedVectorNodes);
       const quantifiedNodes = QuantityEngine.calculate(rulesAppliedNodes);
       
       // Step 3: Run Validation checks
