@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { 
-  CheckCircle, AlertTriangle, XCircle, 
-  Layers, Edit2, Trash2, Check, X, ShieldAlert 
+  CheckCircle, AlertTriangle,
+  Layers, Edit2, Trash2, Check, ShieldAlert 
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import Button from '../components/ui/Button';
 
 interface AqtaElement {
   id: string;
@@ -94,9 +93,12 @@ export default function AqtaReviewPage() {
           <h1 className="text-2xl font-bold text-white">AI Quantity Takeoff Review</h1>
           <p className="text-gray-400 mt-1">Review, edit, and approve elements detected by AQTA v1.0</p>
         </div>
-        <Button onClick={() => navigate(`/projects/${projectId}/boq`)}>
+        <button 
+          onClick={() => navigate(`/projects/${projectId}/boq`)}
+          className="px-4 py-2 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 transition-colors"
+        >
           Proceed to BOQ
-        </Button>
+        </button>
       </div>
 
       <div className="bg-space-900 border border-space-800 rounded-xl overflow-hidden">
