@@ -245,16 +245,25 @@ export default function ProjectFolderPage() {
                               </button>
                             )}
                             {file.status === 'completed' && (
-                              <button 
-                                onClick={async () => {
-                                  const { data } = await supabase.storage.from('drawings').createSignedUrl(file.file_url, 60);
-                                  if (data) window.open(data.signedUrl, '_blank');
-                                }}
-                                className="p-2 bg-white/5 hover:bg-white/10 text-gray-300 rounded transition-colors"
-                                title="Download"
-                              >
-                                <Download className="w-4 h-4" />
-                              </button>
+                              <>
+                                <button 
+                                  onClick={() => navigate(`/projects/${id}/aqta-review`)}
+                                  className="p-2 bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary rounded transition-colors flex items-center gap-1"
+                                  title="AQTA Review"
+                                >
+                                  <Settings className="w-4 h-4" /> AQTA Review
+                                </button>
+                                <button 
+                                  onClick={async () => {
+                                    const { data } = await supabase.storage.from('drawings').createSignedUrl(file.file_url, 60);
+                                    if (data) window.open(data.signedUrl, '_blank');
+                                  }}
+                                  className="p-2 bg-white/5 hover:bg-white/10 text-gray-300 rounded transition-colors"
+                                  title="Download"
+                                >
+                                  <Download className="w-4 h-4" />
+                                </button>
+                              </>
                             )}
                             <button 
                               onClick={() => {
@@ -325,15 +334,23 @@ export default function ProjectFolderPage() {
                         </button>
                       )}
                       {file.status === 'completed' && (
-                         <button 
-                          onClick={async () => {
-                            const { data } = await supabase.storage.from('drawings').createSignedUrl(file.file_url, 60);
-                            if (data) window.open(data.signedUrl, '_blank');
-                          }}
-                          className="px-4 py-1.5 bg-white/10 text-white text-sm rounded-md hover:bg-white/20 w-28 flex justify-center items-center gap-1"
-                        >
-                          <Download className="w-3.5 h-3.5" /> Download
-                        </button>
+                        <>
+                          <button 
+                            onClick={() => navigate(`/projects/${id}/aqta-review`)}
+                            className="px-4 py-1.5 bg-brand-primary/20 text-brand-primary text-sm rounded-md hover:bg-brand-primary/30 w-28 flex justify-center items-center gap-1"
+                          >
+                            <Settings className="w-3.5 h-3.5" /> AQTA Review
+                          </button>
+                          <button 
+                            onClick={async () => {
+                              const { data } = await supabase.storage.from('drawings').createSignedUrl(file.file_url, 60);
+                              if (data) window.open(data.signedUrl, '_blank');
+                            }}
+                            className="px-4 py-1.5 bg-white/10 text-white text-sm rounded-md hover:bg-white/20 w-28 flex justify-center items-center gap-1"
+                          >
+                            <Download className="w-3.5 h-3.5" /> Download
+                          </button>
+                        </>
                       )}
                       <button 
                         onClick={(e) => {

@@ -10,6 +10,7 @@ import ProjectListPage from './pages/ProjectListPage';
 import NewProjectPage from './pages/NewProjectPage';
 import ProjectFolderPage from './pages/ProjectFolderPage';
 import ProcessingPage from './pages/ProcessingPage';
+import AqtaReviewPage from './pages/AqtaReviewPage';
 import BoqReview from './pages/BoqReview';
 import ExportPage from './pages/ExportPage';
 import CostCataloguePage from './pages/CostCataloguePage';
@@ -58,6 +59,7 @@ export default function App() {
               <Route path="/cost-catalogue" element={<CostCataloguePage />} />
               <Route path="/projects/:id" element={<ProjectFolderPage />} />
               <Route path="/projects/:id/processing" element={<ProcessingPage />} />
+              <Route path="/projects/:id/aqta-review" element={<AqtaReviewPage />} />
               <Route path="/projects/:id/boq" element={<BoqReview />} />
               <Route path="/projects/:id/export" element={<ExportPage />} />
               
